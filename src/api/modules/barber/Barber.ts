@@ -16,22 +16,20 @@ export type WorkSchedule = {
 };
 
 export type Client = {
-    clientName: string;
-    procces: string;
-}
+  clientName: string;
+  procces: string;
+};
 
 export type Marked = {
-    day: string;
-    hour: string;
-    client: Client
-}
+  day: string;
+  hour: string;
+  client: Client;
+};
 
 export type DaysOfWork = Record<WeekDay, WorkSchedule>;
 
 export type Barber = {
   _id?: ObjectId;
-  name: string;
   key: ObjectId;
   daysOfWork: DaysOfWork;
-  marked: Marked;
 };
