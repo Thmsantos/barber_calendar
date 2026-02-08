@@ -1,3 +1,5 @@
+import { FastifyReply, FastifyRequest } from "fastify";
+import { Barber } from "../Barber";
 import PartialUpdateBarberService from "../Service/PartialUpdateBarberService";
 
 export default class PartialUpdateBarberController {
@@ -7,11 +9,21 @@ export default class PartialUpdateBarberController {
         this.partialUpdateBarberService = partialUpdateBarberService
     }
 
-    public async handle(request: FastifyRequest) {
+    public async handle(
+        request: FastifyRequest<{ Body: { barber: Barber } }>,
+        reply: FastifyReply
+    ) {
+
         try {
-            await this.partialUpdateBarberService.execute(request.body.barber)
+            const { barber } = request.body;
+            const updated = await this.partialUpdateBarberService.execute(barber);
+
+            return reply.code(201).send(updated);
         } catch (error) {
-            console.error(error)
+            request.log.error(error);
+            return reply.code(500).send({
+                message: "Internal Server Error"
+            });
         }
     }
 }

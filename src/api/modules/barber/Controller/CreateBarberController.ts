@@ -1,20 +1,29 @@
-import { FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import { Barber } from "../Barber";
-import BarberRepository from "../Repository/BarberRepository";
 import CreateBarberService from "../Service/CreateBarberService";
 
-export default class CreateBarberController{
+export default class CreateBarberController {
     private createBarberService: CreateBarberService;
 
-    constructor(createBarberService: CreateBarberService){
+    constructor(createBarberService: CreateBarberService) {
         this.createBarberService = createBarberService
     }
 
-    public async handle(request: FastifyRequest){
-        try{
-            await this.createBarberService(request.body.barber)
-        }catch (error){
-            console.error(error)
+    public async handle(
+        request: FastifyRequest<{ Body: { barber: Barber } }>,
+        reply: FastifyReply
+    ) {
+
+        try {
+            const { barber } = request.body;
+            const created = await this.createBarberService.execute(barber);
+
+            return reply.code(201).send(created);
+        } catch (error) {
+            request.log.error(error);
+            return reply.code(500).send({
+                message: "Internal Server Error"
+            });
         }
     }
 }
