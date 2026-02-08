@@ -1,13 +1,13 @@
-import { FastifyInstance } from "fastify";
 import { ObjectId } from "mongodb";
 import { Barber } from "../Barber";
+import { getDb } from "../../../../lib/mongo";
 
 export default class BarberRepository {
   private collection;
 
-  constructor(app: FastifyInstance) {
-    this.collection = app.mongo.db()
-      .collection<Barber>("barbers");
+  constructor() {
+    const db = getDb();
+    this.collection = db.collection<Barber>("barbers");
   }
 
   async create(data: Barber) {
