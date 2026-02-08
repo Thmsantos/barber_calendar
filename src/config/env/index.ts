@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
+import "dotenv/config"; // carrega .env *antes* de ler qualquer variável
 import { z } from "zod";
-
-dotenv.config();
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(9090),

@@ -1,11 +1,35 @@
-const barberSchema = {
-    type: "object",
-    required: ["key", "daysOfWork"],
-    properties: {
-        key: { type: "string" },
-        daysOfWork: { type: "object" }
-    }
-}
+const dayWorkSchema = {
+  type: "object",
+  required: ["itWorks", "startTime", "endTime"],
+  properties: {
+    itWorks: { type: "boolean" },
+    startTime: { type: "string" },
+    endTime:   { type: "string" }
+  }
+};
+
+const daysOfWorkSchema = {
+  type: "object",
+  properties: {
+    monday: dayWorkSchema,
+    tuesday: dayWorkSchema,
+    wednesday: dayWorkSchema,
+    thursday: dayWorkSchema,
+    friday: dayWorkSchema,
+    saturday: dayWorkSchema,
+    sunday: dayWorkSchema
+  },
+  additionalProperties: false
+};
+
+export const barberSchema = {
+  type: "object",
+  required: ["key", "daysOfWork"],
+  properties: {
+    key: { type: "string" },
+    daysOfWork: daysOfWorkSchema
+  }
+};
 
 export const createBarberSchema = {
     body: {
