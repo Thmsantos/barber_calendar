@@ -1,4 +1,4 @@
-import { FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import FindBarberByIdService from "../Service/FindBarberByIdService";
 
 export default class FindBarberByIdController {
@@ -8,11 +8,20 @@ export default class FindBarberByIdController {
         this.findBarberByIdService = findBarberByIdService
     }
 
-    public async handle(request: FastifyRequest) {
+    public async handle(
+        request: FastifyRequest<{ Params: { id: string } }>,
+        reply: FastifyReply
+    ) {
         try {
-            await this.findBarberByIdService.execute(request.body.id)
+            const { id } = request.params;
+            const findedBarber = await this.findBarberByIdService.execute(id);
+
+            return reply.code(200).send(findedBarber);
         } catch (error) {
-            console.error(error)
+            request.log.error(error);
+            return reply.code(500).send({
+                message: "Internal Server Error"
+            });
         }
     }
 }
