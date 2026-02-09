@@ -1,30 +1,30 @@
-import { ObjectId } from "mongodb";
+import { ObjectId, Collection } from "mongodb";
 import { Barber } from "../Barber";
-import { getDb } from "../../../../lib/mongo";
+import { getDatabase } from "../../../../lib/mongo";
 
 export default class BarberRepository {
-  private collection;
+  private collection?: Collection<Barber>;
 
-  constructor() {
-    const db = getDb();
-    this.collection = db.collection<Barber>("barbers");
+  private async initCollection() {
+    if (!this.collection) {
+      const db = await getDatabase();
+      this.collection = db.collection<Barber>("barbers");
+    }
+    return this.collection;
   }
 
   async create(data: Barber) {
-    const result = await this.collection.insertOne(data);
-    return result;
+    const col = await this.initCollection();
+    return col.insertOne(data);
   }
 
   async findById(id: string) {
-    return this.collection.findOne({
-      _id: new ObjectId(id),
-    });
+    const col = await this.initCollection();
+    return col.findOne({ _id: new ObjectId(id) });
   }
 
   async update(id: string, data: Partial<Barber>) {
-    await this.collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: data }
-    );
+    const col = await this.initCollection();
+    return col.updateOne({ _id: new ObjectId(id) }, { $set: data });
   }
 }
