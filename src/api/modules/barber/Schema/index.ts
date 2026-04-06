@@ -24,9 +24,10 @@ const daysOfWorkSchema = {
 
 export const barberSchema = {
   type: "object",
-  required: ["key", "daysOfWork"],
+  required: ["key", "name", "daysOfWork"],
   properties: {
     key: { type: "string" },
+    name: { type: "string"},
     daysOfWork: daysOfWorkSchema
   }
 };

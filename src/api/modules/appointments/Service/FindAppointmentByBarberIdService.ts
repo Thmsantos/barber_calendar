@@ -1,6 +1,9 @@
-import AppointmentRepository from "../Repository/AppointmentsRepository";
+import { WithId } from "mongodb";
+import { AppointmentRepository } from "../Repository/interface";
+import { Appointment } from "../Appointments";
+import { Service } from "../../../interfaces";
 
-export default class FindAppointmentByBarberIdService {
+export default class FindAppointmentByBarberIdService implements Service<string, WithId<Appointment> | null>{
     private repository: AppointmentRepository;
 
     constructor(
@@ -9,7 +12,8 @@ export default class FindAppointmentByBarberIdService {
         this.repository = appointmentRepository
     }
     
-    public async execute(id: string) {
-        await this.repository.findByBarber(id)
+    public async execute(id: string): Promise<WithId<Appointment> | null> {
+        const findedAppointment = await this.repository.findByBarber(id)
+        return findedAppointment;
     }
 }

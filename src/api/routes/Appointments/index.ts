@@ -5,7 +5,7 @@ import { Appointment } from "../../modules/appointments/Appointments";
 
 
 export async function appointmentsRoutes(app: FastifyInstance) {
-
+    
     app.post<{ Body: { appointment: Appointment } }>(
         "/",
         { schema: createAppointmentSchema },
@@ -13,7 +13,7 @@ export async function appointmentsRoutes(app: FastifyInstance) {
             createAppointmentsController.handle(request, reply)
     );
 
-    app.get<{ Params: { id: string } }>(
+    app.get<{ Params: { barberId: string } }>(
         "/:barberId",
         { schema: findAppointmentSchema },
         async (request, reply) =>

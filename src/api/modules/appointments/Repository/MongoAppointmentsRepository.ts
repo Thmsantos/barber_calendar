@@ -1,8 +1,8 @@
-import { ObjectId, Collection } from "mongodb";
+import { ObjectId, Collection, InsertOneResult, WithId } from "mongodb";
 import { Appointment } from "../Appointments";
 import { getDatabase } from "../../../../lib/mongo";
 
-export default class AppointmentRepository {
+export default class MongoAppointmentRepository {
   private collection: Collection<Appointment> | null = null;
 
   private async init() {
@@ -13,15 +13,14 @@ export default class AppointmentRepository {
     return this.collection;
   }
 
-  async create(data: Appointment) {
+  async create(data: Appointment): Promise<InsertOneResult<Appointment>> {
     const col = await this.init();
     return col.insertOne(data);
   }
 
-  async findByBarber(barberId: string) {
+  async findByBarber(barberId: string): Promise<WithId<Appointment> | null> {
     const col = await this.init();
-    return col
-      .find({ barberId: new ObjectId(barberId) })
-      .toArray();
+    console.log(barberId, await col.findOne({barberId: new ObjectId(barberId)}))
+    return col.findOne({ barberId: new ObjectId(barberId) })
   }
 }

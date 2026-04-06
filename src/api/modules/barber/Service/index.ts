@@ -1,10 +1,10 @@
-import { barberRepository } from "../Repository";
+import { mongoBarberRepository } from "../Repository";
 import CreateBarberService from "./CreateBarberService";
 import FindBarberByIdService from "./FindBarberByIdService";
 import PartialUpdateBarberService from "./PartialUpdateBarberService";
 
-export const createBarberService = new CreateBarberService(barberRepository);
+export const createBarberService = new CreateBarberService(mongoBarberRepository);
 
-export const findBarberByIdService = new FindBarberByIdService(barberRepository);
+export const findBarberByIdService = new FindBarberByIdService(mongoBarberRepository);
 
-export const partialUpdateBarberService = new PartialUpdateBarberService(barberRepository);
+export const partialUpdateBarberService = new PartialUpdateBarberService(mongoBarberRepository);

@@ -9,8 +9,11 @@ const clientSchema = {
 
 const appointmentSchema = {
     type: "object",
-    required: ["barberId", "client"],
+    required: ["barberId", "client", "description", "day", "hour"],
     properties: {
+        day: { type: 'string'},
+        hour: { type: 'string'},
+        description: { type: 'string'},
         barberId: { type: "string" },
         client: clientSchema
     }

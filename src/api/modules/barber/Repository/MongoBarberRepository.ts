@@ -1,8 +1,9 @@
-import { ObjectId, Collection } from "mongodb";
+import { ObjectId, Collection, InsertOneResult, WithId, UpdateResult } from "mongodb";
 import { Barber } from "../Barber";
 import { getDatabase } from "../../../../lib/mongo";
+import { BarberRepository } from "./interfaces/repository";
 
-export default class BarberRepository {
+export default class MongoBarberRepository implements BarberRepository{
   private collection?: Collection<Barber>;
 
   private async initCollection() {
@@ -13,17 +14,17 @@ export default class BarberRepository {
     return this.collection;
   }
 
-  async create(data: Barber) {
+  async create(data: Barber): Promise<InsertOneResult<Barber>> {
     const col = await this.initCollection();
     return col.insertOne(data);
   }
 
-  async findById(id: string) {
+  async findById(id: string): Promise<WithId<Barber> | null> {
     const col = await this.initCollection();
     return col.findOne({ _id: new ObjectId(id) });
   }
 
-  async update(id: string, data: Partial<Barber>) {
+  async update(id: string, data: Partial<Barber>): Promise<UpdateResult<Barber>> {
     const col = await this.initCollection();
     return col.updateOne({ _id: new ObjectId(id) }, { $set: data });
   }

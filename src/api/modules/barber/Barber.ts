@@ -30,6 +30,7 @@ export type DaysOfWork = Record<WeekDay, WorkSchedule>;
 
 export type Barber = {
   _id?: ObjectId;
-  key: ObjectId;
+  key: string;
+  name: string
   daysOfWork: DaysOfWork;
 };

@@ -1,3 +1,3 @@
-import BarberRepository from "./BarberRepository";
+import MongoBarberRepository from "./MongoBarberRepository";
 
-export const barberRepository = new BarberRepository();
+export const mongoBarberRepository = new MongoBarberRepository();

@@ -9,12 +9,12 @@ export default class FindAppointmentByBarberIdController {
     }
 
     public async handle(
-        request: FastifyRequest<{ Params: { id: string } }>,
+        request: FastifyRequest<{ Params: { barberId: string } }>,
         reply: FastifyReply
     ) {
         try {
-            const { id } = request.params;
-            const findedAppointment = await this.findAppointmentsByBarberIdService.execute(id);
+            const { barberId } = request.params;
+            const findedAppointment = await this.findAppointmentsByBarberIdService.execute(barberId);
 
             return reply.code(200).send(findedAppointment);
         } catch (error) {
