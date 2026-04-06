@@ -1,7 +1,9 @@
+import { InsertOneResult } from "mongodb";
 import { Appointment } from "../Appointments";
-import AppointmentRepository from "../Repository/AppointmentsRepository";
+import { AppointmentRepository } from "../Repository/interface";
+import { Service } from "../../../interfaces";
 
-export default class CreateAppointmentsService{
+export default class CreateAppointmentsService implements Service<Appointment, InsertOneResult<Appointment>>{
     private repository: AppointmentRepository;
 
     constructor(
@@ -10,7 +12,8 @@ export default class CreateAppointmentsService{
         this.repository = appointmentRepository
     }
 
-    public async execute(appointment: Appointment){
-        await this.repository.create(appointment)
+    public async execute(appointment: Appointment): Promise<InsertOneResult<Appointment>>{
+        const createdAppointment = await this.repository.create(appointment)
+        return createdAppointment;
     }
 }

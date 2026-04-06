@@ -1,4 +1,4 @@
-import "dotenv/config"; // carrega .env *antes* de ler qualquer variável
+import "dotenv/config";
 import { z } from "zod";
 
 const envSchema = z.object({

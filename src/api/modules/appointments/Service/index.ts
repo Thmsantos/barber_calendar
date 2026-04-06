@@ -1,6 +1,6 @@
-import { appointmentsRepository } from "../Repository";
+import { mongoAppointmentsRepository } from "../Repository";
 import CreateAppointmentsService from "./CreateAppointmentsService";
 import FindAppointmentByBarberIdService from "./FindAppointmentByBarberIdService";
 
-export const createAppointmentsService = new CreateAppointmentsService(appointmentsRepository);
-export const findAppointmentByBarberIdService = new FindAppointmentByBarberIdService(appointmentsRepository);
+export const createAppointmentsService = new CreateAppointmentsService(mongoAppointmentsRepository);
+export const findAppointmentByBarberIdService = new FindAppointmentByBarberIdService(mongoAppointmentsRepository);

@@ -1,3 +1,3 @@
-import AppointmentRepository from "./AppointmentsRepository";
+import MongoAppointmentRepository from "./MongoAppointmentsRepository";
 
-export const appointmentsRepository = new AppointmentRepository()
+export const mongoAppointmentsRepository = new MongoAppointmentRepository()
